@@ -1,0 +1,43 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+.vs/
+
+# Temporary files
+*.tmp
+*.log
+
+# Generated files
+*.g.dart
+*.designer.cs
+
+# Platform-specific directories
+x86/
+x64/
+ARM/
+ARM64/
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Visual Studio settings
+.vscode/
+.editorconfig
+
+# Android-specific files
+**/*.apk
+**/*.aab
+.android/
+
+# .NET MAUI specific
+AppPackages/
+AppPackage/
+
+# Rider / JetBrains IDE settings (if applicable)
+.idea/
+*.iml

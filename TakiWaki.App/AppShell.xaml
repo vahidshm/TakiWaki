@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TakiWaki.App.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TakiWaki.App"
+    xmlns:pages="clr-namespace:TakiWaki.App.Pages"
+    Shell.FlyoutBehavior="Flyout"
+    Title="TakiWaki.App">
+
+    <ShellContent
+        Title="Client"
+        ContentTemplate="{DataTemplate pages:ClientPage}"
+        Route="Client"
+        FlyoutIcon="client.png" />
+
+    <ShellContent
+        Title="Server"
+        ContentTemplate="{DataTemplate pages:ServerPage}"
+        Route="Server"
+        FlyoutIcon="server.png" />
+
+    <ShellContent
+        Title="Settings"
+        ContentTemplate="{DataTemplate pages:SettingsPage}"
+        Route="Settings"
+        FlyoutIcon="settings.png" />
+
+</Shell>
