@@ -5,9 +5,36 @@
              Title="Client">
     <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
         <Label 
+            x:Name="ClientInfoLabel"
+            Text="Client Info:"
+            FontSize="18"
+            HorizontalOptions="Center" />
+
+        <Label 
             Text="Client Page"
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
             HorizontalOptions="Center" />
+        <Entry 
+            x:Name="ServerIpEntry"
+            Placeholder="Server IP Address"
+            Text="192.168.0.3"
+            HorizontalOptions="Center" />
+        <Entry 
+            x:Name="ServerPortEntry"
+            Placeholder="Server Port"
+            Text="5000"
+            Keyboard="Numeric"
+            HorizontalOptions="Center" />
+        <Button 
+            x:Name="ConnectButton"
+            Text="Connect"
+            FontSize="24"
+            HorizontalOptions="Center"
+            Clicked="OnConnectButtonClicked" />
+        <Editor x:Name="ClientLogEditor"
+            IsReadOnly="True"
+            AutoSize="TextChanges"
+            Placeholder="Logs will appear here..." />
     </VerticalStackLayout>
-</ContentPage> 
+</ContentPage>

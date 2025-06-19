@@ -5,9 +5,34 @@
              Title="Server">
     <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
         <Label 
+            x:Name="ServerInfoLabel"
+            Text="Server Info:"
+            FontSize="18"
+            HorizontalOptions="Center" />
+        <Label 
             Text="Server Page"
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
             HorizontalOptions="Center" />
+        <Button 
+            x:Name="StartStopButton"
+            Text="Start"
+            FontSize="24"
+            HorizontalOptions="Center"
+            Clicked="OnStartStopButtonClicked" />
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Entry x:Name="ClientIpEntry" Placeholder="Client IP" Text="192.168.0.233" WidthRequest="150" />
+            <Entry x:Name="ClientPortEntry" Placeholder="Port" Text="5000" Keyboard="Numeric" WidthRequest="80" />
+            <Button Text="Add Client" Clicked="OnAddClientClicked" />
+        </HorizontalStackLayout>
+        <Label Text="Registered Clients:" FontAttributes="Bold" />
+        <ListView x:Name="ClientsListView" HeightRequest="120">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Editor x:Name="ServerLogEditor" HeightRequest="100" IsReadOnly="True" Placeholder="Server log..."/>
     </VerticalStackLayout>
-</ContentPage> 
+</ContentPage>
