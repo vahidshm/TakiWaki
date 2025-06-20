@@ -32,9 +32,22 @@
             FontSize="24"
             HorizontalOptions="Center"
             Clicked="OnConnectButtonClicked" />
-        <Editor x:Name="ClientLogEditor"
-            IsReadOnly="True"
-            AutoSize="TextChanges"
-            Placeholder="Logs will appear here..." />
+        <Grid>
+            <Editor x:Name="ClientLogEditor"
+                IsReadOnly="True"
+                AutoSize="TextChanges"
+                Placeholder="Logs will appear here..." />
+            <Button x:Name="ClientLogClearButton"
+                    Text="✕"
+                    WidthRequest="28"
+                    HeightRequest="28"
+                    BackgroundColor="LightGray"
+                    CornerRadius="6"
+                    FontSize="16"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"
+                    Margin="0,4,4,0"
+                    Clicked="OnClientLogClearClicked" />
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

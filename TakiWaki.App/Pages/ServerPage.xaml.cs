@@ -25,7 +25,8 @@ public partial class ServerPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            ServerLogEditor.Text += message + "\n";
+            var timestamp = DateTime.Now.ToString("HH:mm:ss");
+            ServerLogEditor.Text += $"[{timestamp}] {message}\n";
         });
     }
 
@@ -72,5 +73,10 @@ public partial class ServerPage : ContentPage
     private void UpdateStatus()
     {
         Title = _isRecording ? "Server (Listening)" : "Server (Stopped)";
+    }
+
+    private void OnServerLogClearClicked(object sender, EventArgs e)
+    {
+        ServerLogEditor.Text = string.Empty;
     }
 }

@@ -33,6 +33,19 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Editor x:Name="ServerLogEditor" HeightRequest="100" IsReadOnly="True" Placeholder="Server log..."/>
+        <Grid>
+            <Editor x:Name="ServerLogEditor" HeightRequest="100" IsReadOnly="True" Placeholder="Server log..."/>
+            <Button x:Name="ServerLogClearButton"
+                    Text="✕"
+                    WidthRequest="28"
+                    HeightRequest="28"
+                    BackgroundColor="LightGray"
+                    CornerRadius="6"
+                    FontSize="16"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"
+                    Margin="0,4,4,0"
+                    Clicked="OnServerLogClearClicked" />
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

@@ -23,9 +23,9 @@ public static class MauiProgram
 #if ANDROID
         builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Android.AudioChunkReaderAndroid>();
 #elif WINDOWS
-        builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Windows.IAudioChunkReaderWin>();
+        builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Windows.AudioChunkReaderWin>();
 #else
-        builder.Services.AddSingleton<IAudioChunkReader, AudioChunkReaderStub>();
+        builder.Services.AddSingleton<IAudioChunkReader, Services.AudioChunkReaderStub>();
 #endif
         builder.Services.AddSingleton<ListeningService>();
         builder.Services.AddSingleton<UdpAudioReceiverService>();

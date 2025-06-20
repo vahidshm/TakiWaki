@@ -22,7 +22,8 @@ public partial class ClientPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            ClientLogEditor.Text += message + "\n";
+            var timestamp = DateTime.Now.ToString("HH:mm:ss");
+            ClientLogEditor.Text += $"[{timestamp}] {message}\n";
         });
     }
 
@@ -72,5 +73,10 @@ public partial class ClientPage : ContentPage
     private void UpdateStatus()
     {
         Title = _isConnected ? "Client (Connected)" : "Client (Disconnected)";
+    }
+
+    private void OnClientLogClearClicked(object sender, EventArgs e)
+    {
+        ClientLogEditor.Text = string.Empty;
     }
 }

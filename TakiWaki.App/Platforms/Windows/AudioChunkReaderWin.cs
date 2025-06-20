@@ -6,7 +6,7 @@ using TakiWaki.App.Services;
 
 namespace TakiWaki.App.Platforms.Windows;
 
-public class IAudioChunkReaderWin : IAudioChunkReader
+public class AudioChunkReaderWin : IAudioChunkReader
 {
     public event EventHandler<AudioChunkEventArgs>? AudioChunkReady;
     private WaveInEvent? _waveIn;
