@@ -47,11 +47,15 @@ public partial class ClientPage : ContentPage
             try
             {
                 _localPort = port; // For display purposes, show the port we're connecting to
-                await _receiverService.StartAsync(ip, port, this);
+
+                _isConnected = true;
                 ConnectButton.Text = "Disconnect";
                 ConnectButton.BackgroundColor = Colors.Red;
-                _isConnected = true;
+                ConnectButton.TextColor = Colors.White;
+                ConnectButton.IsEnabled = true;
                 SetClientInfo();
+
+                await _receiverService.StartAsync(ip, port, this);
             }
             catch (Exception ex)
             {
@@ -61,9 +65,11 @@ public partial class ClientPage : ContentPage
         else
         {
             _receiverService.Stop();
-            ConnectButton.Text = "Connect";
-            ConnectButton.BackgroundColor = null; // Use null instead of Colors.Default
             _isConnected = false;
+            ConnectButton.Text = "Connect";
+            ConnectButton.BackgroundColor = Color.FromArgb("#a899e6"); // Light purple
+            ConnectButton.TextColor = Colors.Black;
+            ConnectButton.IsEnabled = true;
             _localPort = 0;
             SetClientInfo();
         }

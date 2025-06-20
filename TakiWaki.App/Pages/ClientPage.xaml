@@ -30,6 +30,8 @@
             x:Name="ConnectButton"
             Text="Connect"
             FontSize="24"
+            BackgroundColor="#a899e6"
+            TextColor="Black"
             HorizontalOptions="Center"
             Clicked="OnConnectButtonClicked" />
         <Grid>

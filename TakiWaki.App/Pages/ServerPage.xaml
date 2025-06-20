@@ -18,6 +18,8 @@
             x:Name="StartStopButton"
             Text="Start"
             FontSize="24"
+            BackgroundColor="#a899e6"
+            TextColor="Black"
             HorizontalOptions="Center"
             Clicked="OnStartStopButtonClicked" />
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
@@ -29,7 +31,7 @@
         <ListView x:Name="ClientsListView" HeightRequest="120">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding}" />
+                    <TextCell Text="{Binding}" TextColor="White" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

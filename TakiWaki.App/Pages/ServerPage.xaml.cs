@@ -43,13 +43,17 @@ public partial class ServerPage : ContentPage
             await _listeningService.StartAsync(DefaultPort, this);
             StartStopButton.Text = "Stop";
             StartStopButton.BackgroundColor = Colors.Red;
+            StartStopButton.TextColor = Colors.White;
+            StartStopButton.IsEnabled = true;
             _isRecording = true;
         }
         else
         {
             await _listeningService.StopAsync();
             StartStopButton.Text = "Start";
-            StartStopButton.BackgroundColor = null; // Use null instead of Colors.Default
+            StartStopButton.BackgroundColor = Color.FromArgb("#a899e6"); // Light purple
+            StartStopButton.TextColor = Colors.Black;
+            StartStopButton.IsEnabled = true;
             _isRecording = false;
         }
         UpdateStatus();
@@ -64,8 +68,12 @@ public partial class ServerPage : ContentPage
             DisplayAlert("Error", "Please enter a valid client IP and port.", "OK");
             return;
         }
-        _listeningService.RegisterClient(ip, port);
-        _clients.Add($"{ip}:{port}");
+        var clientString = $"{ip}:{port}";
+        if (!_clients.Contains(clientString))
+        {
+            _listeningService.RegisterClient(ip, port);
+            _clients.Add(clientString);
+        }
         ClientIpEntry.Text = string.Empty;
         ClientPortEntry.Text = string.Empty;
     }
