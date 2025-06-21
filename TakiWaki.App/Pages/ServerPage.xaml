@@ -30,7 +30,7 @@
         <Label Text="Registered Clients:" FontAttributes="Bold" />
         <ListView x:Name="ClientsListView" HeightRequest="120">
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="x:String">
                     <TextCell Text="{Binding}" TextColor="White" />
                 </DataTemplate>
             </ListView.ItemTemplate>

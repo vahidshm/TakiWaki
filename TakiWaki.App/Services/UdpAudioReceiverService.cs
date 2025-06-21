@@ -16,7 +16,7 @@ public class UdpAudioReceiverService
         _audioChunkPlayer = audioChunkPlayer;
     }
 
-    public async Task StartAsync(string serverIp, int port, ClientPage? clientPage = null)
+    public async Task StartAsync(string serverIP, int port, ClientPage? clientPage = null)
     {
         if (_isListening) return;
         _udpClient = new UdpClient(port);

@@ -4,12 +4,7 @@ using TakiWaki.App.Pages;
 
 namespace TakiWaki.App.Services;
 
-public interface IAudioChunkReader
-{
-    event EventHandler<AudioChunkEventArgs> AudioChunkReady;
-    Task StartAsync();
-    Task StopAsync();
-}
+
 
 public class AudioChunkEventArgs : EventArgs
 {

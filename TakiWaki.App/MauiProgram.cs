@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.Logging;
 using TakiWaki.App.Pages;
+
 using TakiWaki.App.Services;
 
 namespace TakiWaki.App;
@@ -19,16 +20,19 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Services.AddSingleton<INetworkService, NetworkService>();
+
 #if ANDROID
         builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Android.AudioChunkReaderAndroid>();
         builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Android.AudioChunkPlayerAndroid>();
+        builder.Services.AddSingleton<INetworkService, Platforms.Android.AndroidNetworkService>();
 #elif WINDOWS
         builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Windows.AudioChunkReaderWin>();
         builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Windows.AudioChunkPlayerWin>();
+        builder.Services.AddSingleton<INetworkService, BaseNetworkService>();
 #else
         builder.Services.AddSingleton<IAudioChunkReader, Services.AudioChunkReaderStub>();
         builder.Services.AddSingleton<IAudioChunkPlayer, Services.AudioChunkPlayerStub>();
+         builder.Services.AddSingleton<INetworkService, BaseNetworkService>();
 #endif
         builder.Services.AddSingleton<ListeningService>();
         builder.Services.AddSingleton<UdpAudioReceiverService>();

@@ -34,15 +34,43 @@ public class AudioChunkPlayerAndroid : IAudioChunkPlayer
     {
         _isPlaying = true;
         _cts = new CancellationTokenSource();
-        _audioTrack = new AudioTrack(
-            global::Android.Media.Stream.Music,
-            _sampleRate,
-            _channelConfig,
-            _audioFormat,
-            Math.Max(_minBufferSize, 3200 * 10),
-            AudioTrackMode.Stream);
-        _audioTrack.Play();
-        Task.Run(() => PlaybackLoop(_cts.Token));
+
+        if (global::Android.OS.Build.VERSION.SdkInt >= global::Android.OS.BuildVersionCodes.M)
+        {
+            // Use AudioTrack.Builder for API 23+ (M and above)
+            var audioAttributes = new AudioAttributes.Builder()!
+                .SetUsage(AudioUsageKind.Media)!
+                .SetContentType(AudioContentType.Music)!
+                .Build()!; // Suppress null able warning, Build() should not return null
+
+            var audioFormat = new AudioFormat.Builder()!
+                .SetSampleRate(_sampleRate)!
+                .SetEncoding(_audioFormat)!
+                .SetChannelMask(_channelConfig)!
+                .Build()!; // Suppress null able warning
+
+            _audioTrack = new AudioTrack.Builder()
+                .SetAudioAttributes(audioAttributes)
+                .SetAudioFormat(audioFormat)
+                .SetBufferSizeInBytes(Math.Max(_minBufferSize, 3200 * 10))
+                .SetTransferMode(AudioTrackMode.Stream)
+                .Build()!; // Suppress null able warning
+        }
+        else
+        {
+            // Use legacy constructor for API < 23
+            _audioTrack = new AudioTrack(
+                global::Android.Media.Stream.Music,
+                _sampleRate,
+                _channelConfig,
+                _audioFormat,
+                Math.Max(_minBufferSize, 3200 * 10),
+                AudioTrackMode.Stream);
+        }
+
+        _audioTrack?.Play();
+        var token = _cts.Token;
+        Task.Run(() => PlaybackLoop(token));
     }
 
     private void PlaybackLoop(CancellationToken token)
@@ -55,16 +83,19 @@ public class AudioChunkPlayerAndroid : IAudioChunkPlayer
                 playBuffer.AddRange(chunk);
                 if (playBuffer.Count >= _minBufferSize * 2) // ~1-2 seconds buffer
                 {
-                    _audioTrack?.Write(playBuffer.ToArray(), 0, playBuffer.Count);
+                    if (_audioTrack != null)
+                    {
+                        _audioTrack.Write(playBuffer.ToArray(), 0, playBuffer.Count);
+                    }
                     playBuffer.Clear();
                 }
             }
             Thread.Sleep(10);
         }
         // Play any remaining buffer
-        if (playBuffer.Count > 0)
+        if (playBuffer.Count > 0 && _audioTrack != null)
         {
-            _audioTrack?.Write(playBuffer.ToArray(), 0, playBuffer.Count);
+            _audioTrack.Write(playBuffer.ToArray(), 0, playBuffer.Count);
         }
     }
 
