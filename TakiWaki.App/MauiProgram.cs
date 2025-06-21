@@ -22,10 +22,13 @@ public static class MauiProgram
         builder.Services.AddSingleton<INetworkService, NetworkService>();
 #if ANDROID
         builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Android.AudioChunkReaderAndroid>();
+        builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Android.AudioChunkPlayerAndroid>();
 #elif WINDOWS
         builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Windows.AudioChunkReaderWin>();
+        builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Windows.AudioChunkPlayerWin>();
 #else
         builder.Services.AddSingleton<IAudioChunkReader, Services.AudioChunkReaderStub>();
+        builder.Services.AddSingleton<IAudioChunkPlayer, Services.AudioChunkPlayerStub>();
 #endif
         builder.Services.AddSingleton<ListeningService>();
         builder.Services.AddSingleton<UdpAudioReceiverService>();

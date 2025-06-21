@@ -6,13 +6,14 @@ namespace TakiWaki.App.Services;
 
 public class UdpAudioReceiverService
 {
-    // TODO: Implement platform-specific audio playback
     private UdpClient? _udpClient;
     private bool _isListening;
     private ClientPage? _clientPage;
+    private readonly IAudioChunkPlayer _audioChunkPlayer;
 
-    public UdpAudioReceiverService()
+    public UdpAudioReceiverService(IAudioChunkPlayer audioChunkPlayer)
     {
+        _audioChunkPlayer = audioChunkPlayer;
     }
 
     public async Task StartAsync(string serverIp, int port, ClientPage? clientPage = null)
@@ -27,7 +28,7 @@ public class UdpAudioReceiverService
             {
                 var result = await _udpClient.ReceiveAsync();
                 _clientPage?.LogClient($"Received packet: {result.Buffer.Length} bytes");
-                // TODO: Play audio using platform-specific code
+                _audioChunkPlayer.AddChunk(result.Buffer);
             }
         });
     }
@@ -36,6 +37,6 @@ public class UdpAudioReceiverService
     {
         _isListening = false;
         _udpClient?.Dispose();
-        // TODO: Stop playback if needed
+        _audioChunkPlayer.Stop();
     }
 }
