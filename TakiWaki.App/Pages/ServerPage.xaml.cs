@@ -33,7 +33,8 @@ public partial class ServerPage : ContentPage
     private async void SetServerInfo()
     {
         var ip = await _networkService.GetLocalIPAddress();
-        ServerInfoLabel.Text = $"Server: {ip}:{DefaultPort}";
+        ServerInfoLabel.Text = $"Server IP: {ip}";
+        PortInfoLabel.Text = $"Server Port: {DefaultPort}";
     }
 
     private async void OnStartStopButtonClicked(object sender, EventArgs e)
@@ -80,7 +81,7 @@ public partial class ServerPage : ContentPage
 
     private void UpdateStatus()
     {
-        Title = _isRecording ? "Server (Listening)" : "Server (Stopped)";
+        // No longer set Title for status, handled in XAML
     }
 
     private void OnServerLogClearClicked(object sender, EventArgs e)

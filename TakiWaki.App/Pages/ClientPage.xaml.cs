@@ -7,7 +7,6 @@ public partial class ClientPage : ContentPage
     private readonly UdpAudioReceiverService _receiverService;
     private readonly INetworkService _networkService;
     private bool _isConnected;
-    private int _localPort = 0;
 
     public ClientPage(UdpAudioReceiverService receiverService, INetworkService networkService)
     {
@@ -15,7 +14,6 @@ public partial class ClientPage : ContentPage
         _receiverService = receiverService;
         _networkService = networkService;
         UpdateStatus();
-        SetClientInfo();
     }
 
     public void LogClient(string message)
@@ -25,12 +23,6 @@ public partial class ClientPage : ContentPage
             var timestamp = DateTime.Now.ToString("HH:mm:ss");
             ClientLogEditor.Text += $"[{timestamp}] {message}\n";
         });
-    }
-
-    private async void SetClientInfo()
-    {
-        var ip = await _networkService.GetLocalIPAddress();
-        ClientInfoLabel.Text = $"Client: {ip}:{_localPort}";
     }
 
     private async void OnConnectButtonClicked(object sender, EventArgs e)
@@ -46,20 +38,21 @@ public partial class ClientPage : ContentPage
             }
             try
             {
-                _localPort = port; // For display purposes, show the port we're connecting to
-
                 _isConnected = true;
                 ConnectButton.Text = "Disconnect";
                 ConnectButton.BackgroundColor = Colors.Red;
                 ConnectButton.TextColor = Colors.White;
                 ConnectButton.IsEnabled = true;
-                SetClientInfo();
-
+                UpdateStatus();
                 await _receiverService.StartAsync(ip, port, this);
+            }
+            catch (OperationCanceledException oce)
+            {
+                LogClient($"Connection canceled: {oce.Message}");
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Connection Error", ex.Message, "OK");
+                LogClient($"Connection error: {ex.Message}");
             }
         }
         else
@@ -70,15 +63,25 @@ public partial class ClientPage : ContentPage
             ConnectButton.BackgroundColor = Color.FromArgb("#a899e6"); // Light purple
             ConnectButton.TextColor = Colors.Black;
             ConnectButton.IsEnabled = true;
-            _localPort = 0;
-            SetClientInfo();
+            UpdateStatus();
         }
-        UpdateStatus();
     }
 
     private void UpdateStatus()
     {
-        Title = _isConnected ? "Client (Connected)" : "Client (Disconnected)";
+        if (ClientStatusLabel != null && ClientStatusIcon != null)
+        {
+            if (_isConnected)
+            {
+                ClientStatusLabel.Text = "Client (Connected)";
+                ClientStatusIcon.Source = "connected.png";
+            }
+            else
+            {
+                ClientStatusLabel.Text = "Client (Disconnected)";
+                ClientStatusIcon.Source = "disconnected.png";
+            }
+        }
     }
 
     private void OnClientLogClearClicked(object sender, EventArgs e)

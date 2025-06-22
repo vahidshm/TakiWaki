@@ -2,54 +2,74 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TakiWaki.App.Pages.ClientPage"
-             Title="Client">
-    <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
-        <Label 
-            x:Name="ClientInfoLabel"
-            Text="Client Info:"
-            FontSize="18"
-            HorizontalOptions="Center" />
+             Title="">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="*">
+        <!-- Title Bar -->
+        <BoxView Grid.Row="0" BackgroundColor="#a899e6" HeightRequest="54"/>
+        <Label Grid.Row="0" Text="Client Page" FontSize="28" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
-        <Label 
-            Text="Client Page"
-            SemanticProperties.HeadingLevel="Level1"
-            FontSize="32"
-            HorizontalOptions="Center" />
-        <Entry 
-            x:Name="ServerIpEntry"
-            Placeholder="Server IP Address"
-            Text="192.168.0.3"
-            HorizontalOptions="Center" />
-        <Entry 
-            x:Name="ServerPortEntry"
-            Placeholder="Server Port"
-            Text="5000"
-            Keyboard="Numeric"
-            HorizontalOptions="Center" />
-        <Button 
-            x:Name="ConnectButton"
-            Text="Connect"
-            FontSize="24"
-            BackgroundColor="#a899e6"
-            TextColor="Black"
-            HorizontalOptions="Center"
-            Clicked="OnConnectButtonClicked" />
-        <Grid>
-            <Editor x:Name="ClientLogEditor"
-                IsReadOnly="True"
-                AutoSize="TextChanges"
-                Placeholder="Logs will appear here..." />
-            <Button x:Name="ClientLogClearButton"
-                    Text="✕"
-                    WidthRequest="28"
-                    HeightRequest="28"
-                    BackgroundColor="LightGray"
-                    CornerRadius="6"
-                    FontSize="16"
-                    HorizontalOptions="End"
-                    VerticalOptions="Start"
-                    Margin="0,4,4,0"
-                    Clicked="OnClientLogClearClicked" />
+        <!-- Status Row with Icon -->
+        <Grid Grid.Row="1" Padding="20,30,0,10" ColumnDefinitions="Auto,*" BackgroundColor="Transparent">
+            <Image x:Name="ClientStatusIcon" 
+                   Grid.Column="0"
+                   Source="disconnected.png" 
+                   HeightRequest="28" 
+                   WidthRequest="28" 
+                   Margin="35,0,10,0"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="End"/>
+            <Label x:Name="ClientStatusLabel" Grid.Column="1" Text="Client (Disconnected)" 
+                   FontAttributes="Bold" 
+                   FontSize="24" TextColor="White" 
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Start"/>
         </Grid>
-    </VerticalStackLayout>
+
+        <!-- Server IP Entry -->
+        <Grid Grid.Row="2" Padding="20,50,20,20" RowDefinitions="Auto,Auto" ColumnDefinitions="*">
+            <Label Text="Server's IP Address" FontSize="20" TextColor="White" VerticalOptions="Start" HorizontalOptions="Start"/>
+            <Entry x:Name="ServerIpEntry" Grid.Row="1" Placeholder="Server IP Address" Text="192.168.0.3" FontSize="24" 
+                   BackgroundColor="Transparent" 
+                   TextColor="White"
+                   HeightRequest="50"
+                   HorizontalOptions="Fill" 
+                   Margin="0,5,0,0" FontAttributes="Bold"/>
+        </Grid>
+
+        <!-- Server Port Entry -->
+        <Grid Grid.Row="3" Padding="20,0,20,20" RowDefinitions="Auto,Auto" ColumnDefinitions="*">
+            <Label Text="Port" FontSize="20" TextColor="White" VerticalOptions="End" HorizontalOptions="Start"/>
+            <Entry x:Name="ServerPortEntry" Grid.Row="1" Placeholder="Server Port" Text="5000" 
+                   Keyboard="Numeric" FontSize="24" BackgroundColor="Transparent" 
+                   TextColor="White" HeightRequest="50" HorizontalOptions="Fill" 
+                   Margin="0,5,0,0" FontAttributes="Bold"/>
+        </Grid>
+
+        <!-- Connect Button -->
+        <Button Grid.Row="4" x:Name="ConnectButton" Text="Connect" FontSize="24" 
+                BackgroundColor="#a899e6" 
+                TextColor="Black" 
+                HorizontalOptions="Fill" 
+                Clicked="OnConnectButtonClicked" 
+                HeightRequest="55" 
+                Margin="20,10,20,20"/>
+
+        <!-- Log Section -->
+        <Grid Grid.Row="5" RowDefinitions="*" ColumnDefinitions="*,Auto" HeightRequest="160" 
+              VerticalOptions="Start"
+              Padding="20, 10, 20, 10">
+            <Editor x:Name="ClientLogEditor" Grid.Column="0" IsReadOnly="True" AutoSize="TextChanges" 
+                    Placeholder="Logs will appear here..." BackgroundColor="Transparent" TextColor="White"/>
+            <Button x:Name="ClientLogClearButton" 
+                    Grid.Column="1" VerticalOptions="Start" 
+                    WidthRequest="36" HeightRequest="36" 
+                    BackgroundColor="Transparent" BorderColor="White" BorderWidth="2" 
+                    CornerRadius="18" 
+                    Clicked="OnClientLogClearClicked">
+                <Button.ImageSource>
+                    <FileImageSource File="broom.png" />
+                </Button.ImageSource>
+            </Button>
+        </Grid>
+    </Grid>
 </ContentPage>

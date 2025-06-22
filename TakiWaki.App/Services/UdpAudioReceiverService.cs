@@ -22,12 +22,12 @@ public class UdpAudioReceiverService
         _udpClient = new UdpClient(port);
         _isListening = true;
         _clientPage = clientPage;
+        _clientPage?.LogClient("Client Connected");
         await Task.Run(async () =>
         {
             while (_isListening)
             {
                 var result = await _udpClient.ReceiveAsync();
-                _clientPage?.LogClient($"Received packet: {result.Buffer.Length} bytes");
                 _audioChunkPlayer.AddChunk(result.Buffer);
             }
         });
@@ -38,5 +38,6 @@ public class UdpAudioReceiverService
         _isListening = false;
         _udpClient?.Dispose();
         _audioChunkPlayer.Stop();
+        _clientPage?.LogClient("Client Disconnected");
     }
 }
