@@ -33,8 +33,8 @@ public partial class ServerPage : ContentPage
     private async void SetServerInfo()
     {
         var ip = await _networkService.GetLocalIPAddress();
-        ServerInfoLabel.Text = $"Server IP: {ip}";
-        PortInfoLabel.Text = $"Server Port: {DefaultPort}";
+        ServerInfoLabel.Text = ServerInfoLabel.Text.Replace("{IP}", ip);
+        PortInfoLabel.Text = PortInfoLabel.Text.Replace("{Port}", DefaultPort.ToString());
     }
 
     private async void OnStartStopButtonClicked(object sender, EventArgs e)

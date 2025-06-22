@@ -6,15 +6,15 @@
     <Grid RowDefinitions="Auto,Auto, Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="*">
         <!-- Title Bar -->
         <BoxView Grid.Row="0" BackgroundColor="#a899e6" HeightRequest="54"/>
-        <Label Grid.Row="0" Text="Server Page" FontSize="28" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        <Label Grid.Row="0" Text="Sender Page" FontSize="22" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
         <!-- Status Row with Info -->
         <Grid Grid.Row="1" Padding="20,30,0,10" ColumnDefinitions="Auto,*" BackgroundColor="Transparent">
-            <Label x:Name="ServerInfoLabel" Text="Server IP: IP" FontAttributes="Bold" FontSize="24" TextColor="White" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Label x:Name="ServerInfoLabel" Text="Device IP: {IP}" FontAttributes="Bold" FontSize="20" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Center" HorizontalOptions="Start"/>
         </Grid>
 
         <Grid Grid.Row="2" Padding="20,0,0,10" ColumnDefinitions="Auto,*" BackgroundColor="Transparent">
-            <Label x:Name="PortInfoLabel"  Text="Server Port: Port" FontAttributes="Bold" FontSize="24" TextColor="White" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Label x:Name="PortInfoLabel"  Text="Port: {Port}" FontAttributes="Bold" FontSize="20" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Center" HorizontalOptions="Start"/>
         </Grid>
 
         <!-- Start/Stop Button -->
@@ -24,31 +24,34 @@
 
         <!-- Add Client Section -->
         <Grid Grid.Row="4" Padding="20,0,20,0" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,Auto">
-            <Label Grid.ColumnSpan="3" Text="Register Client" FontSize="20" TextColor="White" VerticalOptions="Start" HorizontalOptions="Start"/>
-            <Entry x:Name="ClientIpEntry" Grid.Row="1" Grid.Column="0" Placeholder="Client IP" Text="192.168.0.233" FontSize="18" HeightRequest="44" HorizontalOptions="Fill" Margin="0,5,5,0"/>
-            <Entry x:Name="ClientPortEntry" Grid.Row="1" Grid.Column="1" Placeholder="Port" Text="5000" Keyboard="Numeric" FontSize="18" HeightRequest="44" HorizontalOptions="Fill" Margin="0,5,5,0"/>
+            <Label Grid.ColumnSpan="3" Text="Register Client" FontSize="20" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Start" HorizontalOptions="Start"/>
+            <Entry x:Name="ClientIpEntry" Grid.Row="1" Grid.Column="0" Placeholder="Client IP" Text="192.168.0.233" FontSize="18" HeightRequest="44" HorizontalOptions="Fill" Margin="0,5,5,0" BackgroundColor="{AppThemeBinding Light=#E1E1E1, Dark=Transparent}" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            <Entry x:Name="ClientPortEntry" Grid.Row="1" Grid.Column="1" Placeholder="Port" Text="5000" Keyboard="Numeric" FontSize="18" HeightRequest="44" HorizontalOptions="Fill" Margin="0,5,5,0" BackgroundColor="{AppThemeBinding Light=#E1E1E1, Dark=Transparent}" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
             <Button Grid.Row="1" Grid.Column="2" Text="Add" Clicked="OnAddClientClicked" HeightRequest="44" Margin="0,5,0,0"/>
         </Grid>
 
         <!-- Registered Clients Label -->
-        <Label Grid.Row="5" Text="Registered Clients:" FontAttributes="Bold" FontSize="18" TextColor="White" Margin="20,10,0,0"/>
+        <Label Grid.Row="5" Text="Registered Clients:" FontAttributes="Bold" FontSize="18" TextColor="{AppThemeBinding Light=Black, Dark=White}" Margin="20,10,0,0"/>
 
         <!-- Clients List -->
         <ListView Grid.Row="6" x:Name="ClientsListView" HeightRequest="120" Margin="20,10,20,0">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
-                    <TextCell Text="{Binding}" TextColor="White" />
+                    <TextCell Text="{Binding}" TextColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
         <!-- Log Section -->
         <Grid Grid.Row="7" RowDefinitions="*" ColumnDefinitions="*,Auto" HeightRequest="160" Padding="20,0,20,10">
-            <Editor x:Name="ServerLogEditor" Grid.Column="0" IsReadOnly="True" AutoSize="TextChanges" Placeholder="Server log..." BackgroundColor="Transparent" TextColor="White"/>
-            <Button x:Name="ServerLogClearButton" Grid.Column="1" VerticalOptions="Start" WidthRequest="36" HeightRequest="36" 
-                    BackgroundColor="White" BorderColor="White" BorderWidth="2" CornerRadius="18" Clicked="OnServerLogClearClicked">
+            <Editor x:Name="ServerLogEditor" Grid.Column="0" IsReadOnly="True" AutoSize="TextChanges" Placeholder="Server log..." BackgroundColor="{AppThemeBinding Light=#E1E1E1, Dark=Transparent}" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            <Button x:Name="ServerLogClearButton" Grid.Column="1" VerticalOptions="Start" WidthRequest="42" HeightRequest="42"
+                    BackgroundColor="#a899e6"
+                    Margin="5"
+                    BorderColor="{AppThemeBinding Light=Black, Dark=White}"
+                    BorderWidth="2" CornerRadius="24" Clicked="OnServerLogClearClicked">
                 <Button.ImageSource>
-                    <FileImageSource File="broom.png" />
+                    <AppThemeBinding Light="broom_light.png" Dark="broom_dark.png" />
                 </Button.ImageSource>
             </Button>
         </Grid>

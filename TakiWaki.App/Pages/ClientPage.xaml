@@ -6,7 +6,7 @@
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="*">
         <!-- Title Bar -->
         <BoxView Grid.Row="0" BackgroundColor="#a899e6" HeightRequest="54"/>
-        <Label Grid.Row="0" Text="Client Page" FontSize="28" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        <Label Grid.Row="0" Text="Client Page" FontSize="22" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
         <!-- Status Row with Icon -->
         <Grid Grid.Row="1" Padding="20,30,0,10" ColumnDefinitions="Auto,*" BackgroundColor="Transparent">
@@ -20,17 +20,17 @@
                    HorizontalOptions="End"/>
             <Label x:Name="ClientStatusLabel" Grid.Column="1" Text="Client (Disconnected)" 
                    FontAttributes="Bold" 
-                   FontSize="24" TextColor="White" 
+                   FontSize="24" TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                    VerticalOptions="Center" 
                    HorizontalOptions="Start"/>
         </Grid>
 
         <!-- Server IP Entry -->
         <Grid Grid.Row="2" Padding="20,50,20,20" RowDefinitions="Auto,Auto" ColumnDefinitions="*">
-            <Label Text="Server's IP Address" FontSize="20" TextColor="White" VerticalOptions="Start" HorizontalOptions="Start"/>
+            <Label Text="Sender's IP Address" FontSize="20" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Start" HorizontalOptions="Start"/>
             <Entry x:Name="ServerIpEntry" Grid.Row="1" Placeholder="Server IP Address" Text="192.168.0.3" FontSize="24" 
-                   BackgroundColor="Transparent" 
-                   TextColor="White"
+                   BackgroundColor="{AppThemeBinding Light=#E1E1E1, Dark=Transparent}" 
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
                    HeightRequest="50"
                    HorizontalOptions="Fill" 
                    Margin="0,5,0,0" FontAttributes="Bold"/>
@@ -38,10 +38,10 @@
 
         <!-- Server Port Entry -->
         <Grid Grid.Row="3" Padding="20,0,20,20" RowDefinitions="Auto,Auto" ColumnDefinitions="*">
-            <Label Text="Port" FontSize="20" TextColor="White" VerticalOptions="End" HorizontalOptions="Start"/>
+            <Label Text="Port" FontSize="20" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="End" HorizontalOptions="Start"/>
             <Entry x:Name="ServerPortEntry" Grid.Row="1" Placeholder="Server Port" Text="5000" 
-                   Keyboard="Numeric" FontSize="24" BackgroundColor="Transparent" 
-                   TextColor="White" HeightRequest="50" HorizontalOptions="Fill" 
+                   Keyboard="Numeric" FontSize="24" BackgroundColor="{AppThemeBinding Light=#E1E1E1, Dark=Transparent}" 
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" HeightRequest="50" HorizontalOptions="Fill" 
                    Margin="0,5,0,0" FontAttributes="Bold"/>
         </Grid>
 
@@ -59,15 +59,14 @@
               VerticalOptions="Start"
               Padding="20, 10, 20, 10">
             <Editor x:Name="ClientLogEditor" Grid.Column="0" IsReadOnly="True" AutoSize="TextChanges" 
-                    Placeholder="Logs will appear here..." BackgroundColor="Transparent" TextColor="White"/>
-            <Button x:Name="ClientLogClearButton" 
-                    Grid.Column="1" VerticalOptions="Start" 
-                    WidthRequest="36" HeightRequest="36" 
-                    BackgroundColor="Transparent" BorderColor="White" BorderWidth="2" 
-                    CornerRadius="18" 
-                    Clicked="OnClientLogClearClicked">
+                    Placeholder="Logs will appear here..." BackgroundColor="{AppThemeBinding Light=#E1E1E1, Dark=Transparent}" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            <Button x:Name="ClientLogClearButton" Grid.Column="1" VerticalOptions="Start" WidthRequest="42" HeightRequest="42"
+                         BackgroundColor="#a899e6"
+                         Margin="5"
+                         BorderColor="{AppThemeBinding Light=Black, Dark=White}"
+                         BorderWidth="2" CornerRadius="24" Clicked="OnClientLogClearClicked">
                 <Button.ImageSource>
-                    <FileImageSource File="broom.png" />
+                    <AppThemeBinding Light="broom_light.png" Dark="broom_dark.png" />
                 </Button.ImageSource>
             </Button>
         </Grid>

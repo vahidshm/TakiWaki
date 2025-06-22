@@ -8,6 +8,33 @@
     Shell.FlyoutBehavior="Flyout"
     Title="TakiWaki.App">
 
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="FlyoutItemLabel">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0,12,0,12" />
+            </Style>
+            <Style TargetType="Image" x:Key="FlyoutIconStyle">
+                <Setter Property="WidthRequest" Value="40" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="Margin" Value="0,0,18,0" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid Padding="16,8" ColumnDefinitions="Auto,*" VerticalOptions="Center">
+                <Image Source="{Binding FlyoutIcon}" WidthRequest="40" HeightRequest="40" Margin="0,0,18,0" VerticalOptions="Center"/>
+                <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
     <ShellContent
         Title="Client"
         ContentTemplate="{DataTemplate pages:ClientPage}"
