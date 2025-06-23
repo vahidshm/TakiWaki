@@ -5,13 +5,13 @@ namespace TakiWaki.App.Pages;
 
 public partial class ServerPage : ContentPage
 {
-    private readonly ListeningService _listeningService;
+    private readonly WindowsAudioBroadcaseService _listeningService;
     private readonly INetworkService _networkService;
     private bool _isRecording;
     private const int DefaultPort = 5000;
     private ObservableCollection<string> _clients = new();
 
-    public ServerPage(ListeningService listeningService, INetworkService networkService)
+    public ServerPage(WindowsAudioBroadcaseService listeningService, INetworkService networkService)
     {
         InitializeComponent();
         _listeningService = listeningService;
@@ -39,6 +39,26 @@ public partial class ServerPage : ContentPage
 
     private async void OnStartStopButtonClicked(object sender, EventArgs e)
     {
+#if ANDROID
+        if (!_isRecording)
+        {
+            AndroidBackgroundAudioService.StartServer(DefaultPort);
+            StartStopButton.Text = "Stop";
+            StartStopButton.BackgroundColor = Colors.Red;
+            StartStopButton.TextColor = Colors.White;
+            StartStopButton.IsEnabled = true;
+            _isRecording = true;
+        }
+        else
+        {
+            AndroidBackgroundAudioService.Stop();
+            StartStopButton.Text = "Start";
+            StartStopButton.BackgroundColor = Color.FromArgb("#a899e6"); // Light purple
+            StartStopButton.TextColor = Colors.Black;
+            StartStopButton.IsEnabled = true;
+            _isRecording = false;
+        }
+#else
         if (!_isRecording)
         {
             await _listeningService.StartAsync(DefaultPort, this);
@@ -57,6 +77,7 @@ public partial class ServerPage : ContentPage
             StartStopButton.IsEnabled = true;
             _isRecording = false;
         }
+#endif
         UpdateStatus();
     }
 
@@ -72,7 +93,11 @@ public partial class ServerPage : ContentPage
         var clientString = $"{ip}:{port}";
         if (!_clients.Contains(clientString))
         {
+#if ANDROID
+            AndroidBackgroundAudioService.RegisterClient(ip, port);
+#else
             _listeningService.RegisterClient(ip, port);
+#endif
             _clients.Add(clientString);
         }
         ClientIpEntry.Text = string.Empty;

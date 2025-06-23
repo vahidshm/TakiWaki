@@ -19,7 +19,7 @@ public interface INetworkService
     Task<bool> ConnectToServer(string ipAddress, int port);
 }
 
-public class BaseNetworkService : INetworkService
+public class NetworkServiceBase : INetworkService
 {
     private TcpListener? _server;
     private TcpClient? _client;

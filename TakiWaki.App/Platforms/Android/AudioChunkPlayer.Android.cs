@@ -5,7 +5,7 @@ using TakiWaki.App.Services;
 
 namespace TakiWaki.App.Platforms.Android;
 
-public class AudioChunkPlayerAndroid : IAudioChunkPlayer
+public class AndroidAudioChunkPlayer : IAudioChunkPlayer
 {
     private AudioTrack? _audioTrack;
     private readonly int _sampleRate = 16000;
@@ -16,7 +16,7 @@ public class AudioChunkPlayerAndroid : IAudioChunkPlayer
     private int _minBufferSize;
     private bool _isPlaying;
 
-    public AudioChunkPlayerAndroid()
+    public AndroidAudioChunkPlayer()
     {
         _minBufferSize = AudioTrack.GetMinBufferSize(_sampleRate, _channelConfig, _audioFormat);
     }

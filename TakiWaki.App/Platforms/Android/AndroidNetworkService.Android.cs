@@ -11,7 +11,7 @@ using TakiWaki.App.Services;
 
 namespace TakiWaki.App.Platforms.Android
 {
-    internal class AndroidNetworkService : BaseNetworkService, INetworkService
+    internal class AndroidNetworkService : NetworkServiceBase, INetworkService
     {
         public override async Task<string> GetLocalIPAddress()
         {

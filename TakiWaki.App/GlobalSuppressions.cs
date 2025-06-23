@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Interoperability", "CA1422:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:TakiWaki.App.Platforms.Android.AudioChunkPlayerAndroid.StartPlaybackLoop")]
+[assembly: SuppressMessage("Interoperability", "CA1422:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:TakiWaki.App.Platforms.Android.AndroidAudioChunkPlayer.StartPlaybackLoop")]

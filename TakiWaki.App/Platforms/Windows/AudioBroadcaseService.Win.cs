@@ -4,30 +4,21 @@ using TakiWaki.App.Pages;
 
 namespace TakiWaki.App.Services;
 
-public class AudioChunkEventArgs : EventArgs
-{
-    public byte[] AudioChunk { get; }
-    public AudioChunkEventArgs(byte[] chunk) => AudioChunk = chunk;
-}
-
-public class ListeningService
+public class WindowsAudioBroadcaseService : AudioBroadcastServiceBase
 {
     private readonly IAudioChunkReader _audioChunkReader;
-    private UdpClient? _udpClient;
     private bool _isListening;
-    private int _port;
-    private List<IPEndPoint> _clients = new();
     private ServerPage? _serverPage;
 
-    public ListeningService(IAudioChunkReader audioChunkReader)
+    public WindowsAudioBroadcaseService(IAudioChunkReader audioChunkReader)
     {
         _audioChunkReader = audioChunkReader;
     }
 
-    public void RegisterClient(string ip, int port)
+    public override void RegisterClient(string ip, int port)
     {
-        _clients.Add(new IPEndPoint(IPAddress.Parse(ip), port));
-        _serverPage?.LogServer($"Client {ip} Connected");
+        base.RegisterClient(ip, port);
+        _serverPage?.LogServer($"Client {ip} Registered.");
     }
 
     public async Task StartAsync(int port, ServerPage? serverPage = null)
@@ -54,10 +45,6 @@ public class ListeningService
 
     private void OnAudioChunkReady(object? sender, AudioChunkEventArgs e)
     {
-        if (_udpClient == null || _clients.Count == 0) return;
-        foreach (var client in _clients)
-        {
-            _udpClient.Send(e.AudioChunk, client);
-        }
+        BroadcastAudioChunk(e.AudioChunk);
     }
 }

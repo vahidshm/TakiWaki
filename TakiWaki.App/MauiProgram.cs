@@ -23,22 +23,22 @@ public static class MauiProgram
 
 
 #if ANDROID
-        builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Android.AudioChunkReaderAndroid>();
-        builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Android.AudioChunkPlayerAndroid>();
+        builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Android.AndroidAudioChunkReader>();
+        builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Android.AndroidAudioChunkPlayer>();
         builder.Services.AddSingleton<INetworkService, Platforms.Android.AndroidNetworkService>();
 #elif WINDOWS
-        builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Windows.AudioChunkReaderWin>();
-        builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Windows.AudioChunkPlayerWin>();
-        builder.Services.AddSingleton<INetworkService, BaseNetworkService>();
+        builder.Services.AddSingleton<IAudioChunkReader, TakiWaki.App.Platforms.Windows.WindowsAudioChunkReader>();
+        builder.Services.AddSingleton<IAudioChunkPlayer, TakiWaki.App.Platforms.Windows.WindowsAudioChunkPlayer>();
+        builder.Services.AddSingleton<INetworkService, NetworkServiceBase>();
 #else
         builder.Services.AddSingleton<IAudioChunkReader, Services.AudioChunkReaderStub>();
         builder.Services.AddSingleton<IAudioChunkPlayer, Services.AudioChunkPlayerStub>();
-         builder.Services.AddSingleton<INetworkService, BaseNetworkService>();
+         builder.Services.AddSingleton<INetworkService, NetworkServiceBase>();
 #endif
-        builder.Services.AddSingleton<ListeningService>();
+        builder.Services.AddSingleton<WindowsAudioBroadcaseService>();
         builder.Services.AddSingleton<UdpAudioReceiverService>();
         builder.Services.AddSingleton<ClientPage>(sp => new ClientPage(sp.GetRequiredService<UdpAudioReceiverService>(), sp.GetRequiredService<INetworkService>()));
-        builder.Services.AddSingleton<ServerPage>(sp => new ServerPage(sp.GetRequiredService<ListeningService>(), sp.GetRequiredService<INetworkService>()));
+        builder.Services.AddSingleton<ServerPage>(sp => new ServerPage(sp.GetRequiredService<WindowsAudioBroadcaseService>(), sp.GetRequiredService<INetworkService>()));
         builder.Services.AddSingleton<SettingsPage>();
 
 #if DEBUG

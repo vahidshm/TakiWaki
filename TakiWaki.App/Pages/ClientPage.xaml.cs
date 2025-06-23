@@ -7,6 +7,8 @@ public partial class ClientPage : ContentPage
     private readonly UdpAudioReceiverService _receiverService;
     private readonly INetworkService _networkService;
     private bool _isConnected;
+    private int _lastPort;
+    private string? _lastIp;
 
     public ClientPage(UdpAudioReceiverService receiverService, INetworkService networkService)
     {
@@ -38,13 +40,19 @@ public partial class ClientPage : ContentPage
             }
             try
             {
+#if ANDROID
+                AndroidBackgroundAudioService.StartClient(ip, port);
+                _lastIp = ip;
+                _lastPort = port;
+#else
+                await _receiverService.StartAsync(ip, port, this);
+#endif
                 _isConnected = true;
                 ConnectButton.Text = "Disconnect";
                 ConnectButton.BackgroundColor = Colors.Red;
                 ConnectButton.TextColor = Colors.White;
                 ConnectButton.IsEnabled = true;
                 UpdateStatus();
-                await _receiverService.StartAsync(ip, port, this);
             }
             catch (OperationCanceledException oce)
             {
@@ -57,7 +65,11 @@ public partial class ClientPage : ContentPage
         }
         else
         {
+#if ANDROID
+            AndroidBackgroundAudioService.Stop();
+#else
             _receiverService.Stop();
+#endif
             _isConnected = false;
             ConnectButton.Text = "Connect";
             ConnectButton.BackgroundColor = Color.FromArgb("#a899e6"); // Light purple

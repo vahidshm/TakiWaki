@@ -4,7 +4,7 @@ using TakiWaki.App.Services;
 
 namespace TakiWaki.App.Platforms.Windows;
 
-public class AudioChunkPlayerWin : IAudioChunkPlayer
+public class WindowsAudioChunkPlayer : IAudioChunkPlayer
 {
     private WaveOutEvent? _waveOut;
     private BufferedWaveProvider? _bufferedWaveProvider;

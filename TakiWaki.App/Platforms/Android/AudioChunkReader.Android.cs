@@ -6,7 +6,7 @@ using TakiWaki.App.Services;
 
 namespace TakiWaki.App.Platforms.Android;
 
-public class AudioChunkReaderAndroid : IAudioChunkReader
+public class AndroidAudioChunkReader : IAudioChunkReader
 {
     public event EventHandler<AudioChunkEventArgs>? AudioChunkReady;
     private AudioRecord? _audioRecord;
@@ -17,7 +17,7 @@ public class AudioChunkReaderAndroid : IAudioChunkReader
     private readonly int _bufferSize;
     private readonly int _chunkSize = 3200; // 100ms at 16kHz, 16bit mono
 
-    public AudioChunkReaderAndroid()
+    public AndroidAudioChunkReader()
     {
         _bufferSize = AudioRecord.GetMinBufferSize(_sampleRate, _channelConfig, _audioFormat);
     }
