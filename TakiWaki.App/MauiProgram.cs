@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Logging;
 using TakiWaki.App.Pages;
-
 using TakiWaki.App.Services;
 
 namespace TakiWaki.App;
@@ -33,12 +32,12 @@ public static class MauiProgram
 #else
         builder.Services.AddSingleton<IAudioChunkReader, Services.AudioChunkReaderStub>();
         builder.Services.AddSingleton<IAudioChunkPlayer, Services.AudioChunkPlayerStub>();
-         builder.Services.AddSingleton<INetworkService, NetworkServiceBase>();
+        builder.Services.AddSingleton<INetworkService, NetworkServiceBase>();
 #endif
-        builder.Services.AddSingleton<WindowsAudioBroadcaseService>();
+        builder.Services.AddSingleton<TakiWaki.App.Services.ListeningServerService>();
         builder.Services.AddSingleton<UdpAudioReceiverService>();
         builder.Services.AddSingleton<ClientPage>(sp => new ClientPage(sp.GetRequiredService<UdpAudioReceiverService>(), sp.GetRequiredService<INetworkService>()));
-        builder.Services.AddSingleton<ServerPage>(sp => new ServerPage(sp.GetRequiredService<WindowsAudioBroadcaseService>(), sp.GetRequiredService<INetworkService>()));
+        builder.Services.AddSingleton<ServerPage>(sp => new ServerPage(sp.GetRequiredService<ListeningServerService>(), sp.GetRequiredService<INetworkService>()));
         builder.Services.AddSingleton<SettingsPage>();
 
 #if DEBUG

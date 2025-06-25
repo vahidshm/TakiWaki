@@ -5,13 +5,13 @@ namespace TakiWaki.App.Pages;
 
 public partial class ServerPage : ContentPage
 {
-    private readonly WindowsAudioBroadcaseService _listeningService;
+    private readonly ListeningServerService _listeningService;
     private readonly INetworkService _networkService;
     private bool _isRecording;
     private const int DefaultPort = 5000;
     private ObservableCollection<string> _clients = new();
 
-    public ServerPage(WindowsAudioBroadcaseService listeningService, INetworkService networkService)
+    public ServerPage(ListeningServerService listeningService, INetworkService networkService)
     {
         InitializeComponent();
         _listeningService = listeningService;

@@ -4,13 +4,13 @@ using TakiWaki.App.Pages;
 
 namespace TakiWaki.App.Services;
 
-public class WindowsAudioBroadcaseService : AudioBroadcastServiceBase
+public class ListeningServerService : AudioBroadcastServiceBase
 {
     private readonly IAudioChunkReader _audioChunkReader;
     private bool _isListening;
     private ServerPage? _serverPage;
 
-    public WindowsAudioBroadcaseService(IAudioChunkReader audioChunkReader)
+    public ListeningServerService(IAudioChunkReader audioChunkReader)
     {
         _audioChunkReader = audioChunkReader;
     }
